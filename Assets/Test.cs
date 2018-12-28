@@ -7,43 +7,36 @@ using System.IO;
 using System.Linq;
 using Google.Protobuf;
 
-
-public class local : MonoBehaviour
+public class Test : MonoBehaviour
 {
     void Start()
     {
-        ConncetServer_local();
+        ConncetServer_test();
     }
+
     private void Update()
     {
-        ConncetServer_local();
+        ConncetServer_test();
     }
 
-
-    void ConncetServer_local()
+    void ConncetServer_test()
     {
         IPAddress ipAdr = IPAddress.Parse("101.132.135.198");
         IPEndPoint ipEp = new IPEndPoint(ipAdr, 1234);
 
         Socket clientScoket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientScoket.Connect(ipEp);
-       
-        float xx = GameObject.Find("def").GetComponent<Transform>().position.x;
-        float yy = GameObject.Find("def").GetComponent<Transform>().position.y;
-        float zz = GameObject.Find("def").GetComponent<Transform>().position.z;
-        float rx = GameObject.Find("def").GetComponent<Transform>().localEulerAngles.x;
-        float ry = GameObject.Find("def").GetComponent<Transform>().localEulerAngles.y;
-        float rz = GameObject.Find("def").GetComponent<Transform>().localEulerAngles.z;
-        Local loc = new Local{ PosX = xx, PosY = yy, PosZ = zz , RotX = rx, RotY = ry, RotZ = rz, Name = "def" };
+        Local loc = new Local { PosX = 12, PosY = 12, PosZ = 32, Name = "abc", RotX = 12, RotY = 123, RotZ = 34 };
         byte[] concent = loc.ToByteArray();
         clientScoket.Send(concent);
         byte[] response = new byte[1024];
         int len_recv = clientScoket.Receive(response);
         byte[] data = response.Take(len_recv).ToArray();
         Another another = Another.Parser.ParseFrom(data);
+        GameObject.Find("ghi").GetComponent<Transform>().position = new Vector3(another.PosX, another.PosY, another.PosZ);
+        transform.localEulerAngles = new Vector3(another.RotX, another.RotY, another.RotZ);
+
         clientScoket.Shutdown(SocketShutdown.Both);
         clientScoket.Close();
-
-
     }
 }
