@@ -64,6 +64,7 @@
     <Compile Include="Assets\ClientToServer.cs" />
     <Compile Include="Assets\local.cs" />
     <Compile Include="Assets\ServerToClient.cs" />
+    <Compile Include="Assets\Test.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/lenovo/Desktop/client_test/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
